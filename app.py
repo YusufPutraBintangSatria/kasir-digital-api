@@ -21,9 +21,8 @@ swagger = Swagger(app, template={
         "version": "2.0.0",
         "description": "REST API untuk mengelola transaksi top-up digital dengan JWT authentication"
     },
-    "host": "127.0.0.1:5000",
     "basePath": "/",
-    "schemes": ["http"]
+    "schemes": ["http", "https"]
 })
 
 # ============ ROUTES ============
@@ -312,4 +311,7 @@ def internal_error(error):
 # ============ MAIN ============
 
 if __name__ == "__main__":
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    # For production (Railway), use host='0.0.0.0' and port from env
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
