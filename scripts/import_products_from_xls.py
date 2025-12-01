@@ -31,7 +31,19 @@ def normalize_column_name(name):
 
 
 def read_excel_to_products(excel_path: Path):
-    df = pd.read_excel(excel_path, engine='openpyxl' if str(excel_path).lower().endswith(('xlsx','xlsm','xlsb','xls')) else None)
+    """Read Excel file and convert to products dict. Supports both .xls and .xlsx formats."""
+    file_ext = str(excel_path).lower()
+    
+    # For .xls files (legacy format), use xlrd engine
+    if file_ext.endswith('.xls'):
+        engine = 'xlrd'
+    # For .xlsx files, use openpyxl engine
+    elif file_ext.endswith('.xlsx'):
+        engine = 'openpyxl'
+    else:
+        engine = None
+    
+    df = pd.read_excel(excel_path, engine=engine)
     # Normalize column names
     df.columns = [normalize_column_name(c) for c in df.columns]
 
