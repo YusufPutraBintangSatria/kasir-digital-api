@@ -32,8 +32,8 @@ def home():
     """Endpoint home - untuk cek apakah API berjalan"""
     return jsonify({
         "status": "success",
-        "message": "Selamat datang di Kasir Digital API v2.0",
         "version": "2.0.0",
+        "message": "Selamat datang di Kasir Digital API v2.0",
         "features": ["Authentication", "JWT Token", "Protected Endpoints"],
         "info": "Gunakan /auth/register dan /auth/login untuk memulai"
     }), 200
@@ -78,7 +78,7 @@ def register():
         description: Username sudah ada atau input tidak valid
     """
     try:
-        data = request.get_json(silent=True)
+        data = request.get_json(force=True, silent=False)
         
         if not data or 'username' not in data or 'password' not in data:
             return jsonify({
@@ -101,8 +101,8 @@ def register():
     except Exception as e:
         return jsonify({
             "status": "error",
-            "message": f"Terjadi kesalahan: {str(e)}"
-        }), 500
+            "message": "Username dan password harus disediakan"
+        }), 400
 
 
 @app.route('/auth/login', methods=['POST'])
