@@ -33,6 +33,7 @@ def home():
     return jsonify({
         "status": "success",
         "message": "Selamat datang di Kasir Digital API v2.0",
+        "version": "2.0.0",
         "features": ["Authentication", "JWT Token", "Protected Endpoints"],
         "info": "Gunakan /auth/register dan /auth/login untuk memulai"
     }), 200
@@ -77,7 +78,7 @@ def register():
         description: Username sudah ada atau input tidak valid
     """
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True)
         
         if not data or 'username' not in data or 'password' not in data:
             return jsonify({

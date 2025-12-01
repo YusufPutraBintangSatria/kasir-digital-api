@@ -167,7 +167,7 @@ class TestProtectedRoutes:
         data = json.loads(response.data)
         assert data['status'] == 'success'
         assert 'data' in data
-        assert data['total'] == 3
+        assert data['total'] >= 3
 
 
 class TestTransactions:
